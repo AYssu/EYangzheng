@@ -1,3 +1,4 @@
+
 package com.ayssu.easyverify.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -20,9 +21,15 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.debug("插入时自动填充字段");
-        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
-        this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
-        this.strictInsertFill(metaObject, "deleted", Integer.class, 0);
+        LocalDateTime now = LocalDateTime.now();
+        
+        // 使用 fillStrategy 方法，如果字段为 null 则填充
+        // fillStrategy 会在字段值为 null 时填充，如果字段已有值则不填充
+        this.fillStrategy(metaObject, "createTime", now);
+        this.fillStrategy(metaObject, "updateTime", now);
+        this.fillStrategy(metaObject, "deleted", 0);
+        
+        log.debug("插入填充完成 - createTime: {}, updateTime: {}, deleted: 0", now, now);
     }
 
     /**
@@ -31,6 +38,13 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         log.debug("更新时自动填充字段");
-        this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        
+        // 更新时填充 updateTime
+        // fillStrategy 会在字段值为 null 时填充，如果字段已有值则不填充
+        this.fillStrategy(metaObject, "updateTime", now);
+        
+        log.debug("更新填充完成 - updateTime: {}", now);
     }
 }
+

@@ -1,6 +1,7 @@
 package com.ayssu.easyverify.config;
 
 import com.ayssu.easyverify.interceptor.AuthInterceptor;
+import com.ayssu.easyverify.interceptor.LocalhostInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -15,12 +16,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private final AuthInterceptor authInterceptor;
+    private final LocalhostInterceptor localhostInterceptor;
 
     /**
      * 注册拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 本地访问拦截器：限制 /system/** 只能通过 localhost 或 127.0.0.1 访问
+        registry.addInterceptor(localhostInterceptor)
+                .addPathPatterns("/system/**");
+        
+        // 认证拦截器：拦截所有管理端接口
         registry.addInterceptor(authInterceptor)
                 // 拦截所有管理端接口
                 .addPathPatterns("/api/admin/**")

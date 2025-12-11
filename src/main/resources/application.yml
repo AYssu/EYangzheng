@@ -19,6 +19,19 @@ spring:
       host: localhost
       port: 6379
 
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.ayssu.easyverify.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+
+# JWT 配置
+jwt:
+  secret: EY-easy-verify-secret-key-2025-please-change-in-production
+  expire-days: 7
+  issuer: EY-easy-verify
+
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:

@@ -61,7 +61,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Hutool (包含 JWT 工具)
-    implementation 'cn.hutool:hutool-all:5.8.26'
+    implementation 'cn.hutool:hutool-all:5.8.40'
 
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
