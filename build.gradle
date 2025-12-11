@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.0.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.ayssu.yz'
+version = '0.0.1-SNAPSHOT'
+description = 'EYangzheng'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.baomidou:mybatis-plus-bom:3.5.14"
+    }
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo1.maven.org/maven2'
+    }
+    maven {
+        url 'https://gitee.com/xiaoym/knife4j-repo/raw/master'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    implementation 'com.squareup.okhttp3:okhttp:5.2.1'
+
+    // spring boot3 引入可选模块
+    implementation("com.baomidou:mybatis-plus-spring-boot3-starter")
+
+    // jdk 11+ 引入可选模块
+    implementation("com.baomidou:mybatis-plus-jsqlparser")
+
+    // Springdoc OpenAPI (OpenAPI 3)
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+    
+    // Knife4j UI (Swagger UI 的增强版)
+    implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.4.0")
+
+    // Fastjson2
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.47'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Hutool (包含 JWT 工具)
+    implementation 'cn.hutool:hutool-all:5.8.26'
+
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-mail-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
